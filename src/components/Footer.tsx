@@ -13,10 +13,12 @@ export default function Footer(){
         }}
         >
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: { xs: 2, sm: 3 } }}>
+                {/*Name*/}
                 <Typography color="text.primary">
                 © 2025 Markuss Auseklis
                 </Typography>
 
+                {/*Icons*/}
                 <Box sx={{ display: "flex", gap: 2 }}>
                 <IconButton sx={{ "&:hover": { backgroundColor: "primary.dark" }, color: "text.primary" }} href="https://facebook.com" target="_blank">
                     <Facebook />
