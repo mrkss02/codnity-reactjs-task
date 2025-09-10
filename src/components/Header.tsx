@@ -6,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
@@ -28,75 +27,59 @@ export default function Header(){
     };
 
     return(
-        <AppBar position="static">
-            <Container>
-                <Toolbar>
-                    {/*Logo*/}
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
+        <AppBar position="sticky" color="primary">
+            <Toolbar sx = {{justifyContent: "space-between"}}>
+                {/* Logo */}
+                <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: ".2rem" }}>
+                Codnity Task
+                </Typography>
+
+                {/* Mobile */}
+                <Box sx={{ display: { xs: "flex", sm: "none" } }}>
+                <IconButton onClick={handleOpenNavMenu} color="inherit">
+                    <MenuIcon />
+                </IconButton>
+                <Menu
+                    anchorEl={anchorElNav}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    PaperProps={{
+                    sx: { backgroundColor: "primary.main", color: "primary.contrastText" },
+                    }}
+                >
+                    {pages.map((page) => (
+                    <MenuItem
+                        key={page}
+                        component={Link}
+                        to={page === "Home" ? "/" : `/${page.toLowerCase()}`}
+                        onClick={handleCloseNavMenu}
                         sx={{
-                        mr: 2,
-                        display: { xs: "flex", md: "flex" },
-                        fontWeight: 700,
-                        letterSpacing: ".2rem",
-                        color: "inherit",
-                        textDecoration: "none",
-                        }}>
-                        Codnity Task
-                    </Typography>
+                        "&:hover": { backgroundColor: "primary.dark" },
+                        mx: "0.5rem",
+                        px: "1rem",
+                        borderRadius: 0.8
+                        }}
+                    >
+                        <Typography fontSize= "0.9rem" textTransform="uppercase">{page}</Typography>
+                    </MenuItem>
+                    ))}
+                </Menu>
+                </Box>
 
-                    {/* Mobile */}
-                    <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }, justifyContent: "flex-end" }}>
-                        <IconButton
-                            size="large"
-                            aria-label="menu"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit">
-                            <MenuIcon />
-                        </IconButton>
-                        
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{ display: { xs: "block", md: "none" } }}
-                            >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu} component={Link} to={`/${page.toLowerCase()}`}>
-                                <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-
-                    {/*Desktop */}
-                    <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}>
-                        {pages.map((page) => (
-                        <Button
-                            key={page}
-                            component={Link}
-                            to={`/${page.toLowerCase()}`}
-                            sx={{ my: 2, color: "white", display: "block" }}>
-                            {page}
-                        </Button>
-                        ))}
-                    </Box>
-                </Toolbar>
-            </Container>
+                {/* Desktop */}
+                <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+                {pages.map((page) => (
+                    <Button
+                    key={page}
+                    component={Link}
+                    to={page === "Home" ? "/" : `/${page.toLowerCase()}`}
+                    sx={{ color: "primary.contrastText", "&:hover": { backgroundColor: "primary.dark" } }}
+                    >
+                    {page}
+                    </Button>
+                ))}
+                </Box>
+            </Toolbar>
         </AppBar>
-    )
+    );
 }
